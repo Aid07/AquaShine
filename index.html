@@ -1,0 +1,950 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>AquaShine — автомойка премиум класса</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --navy: #071018;
+            --blue: #2ec4b6;
+            --blue-mid: #1a9e93;
+            --ice: #0d1a24;
+            --panel: #163042;
+            --white: #122230;
+            --ink: #e8f1f6;
+            --muted: #9bb0bd;
+            --line: rgba(46, 196, 182, 0.22);
+            --gold: #f0a500;
+            --radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Manrope, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 80% 8%, rgba(46, 196, 182, 0.16), transparent 42%),
+                linear-gradient(180deg, #0a1822, #071018 40%);
+            color: var(--ink);
+            line-height: 1.55;
+            padding: 0 20px 48px;
+            max-width: 1180px;
+            margin: 0 auto;
+        }
+
+        .top-nav {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px 18px;
+            padding: 16px 14px;
+            margin: 0 -8px 28px;
+            position: sticky;
+            top: 0;
+            background: rgba(7, 16, 24, 0.92);
+            backdrop-filter: blur(12px);
+            z-index: 50;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+        }
+
+        .brand-logo {
+            font-weight: 800;
+            font-size: 1.65rem;
+            color: #fff;
+            letter-spacing: -0.5px;
+            margin-right: auto;
+            white-space: nowrap;
+        }
+        .brand-logo span { color: var(--blue); }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .menu-toggle {
+            display: none;
+            width: 44px;
+            height: 44px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.16);
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 12px;
+        }
+
+        .nav-btn, .verify-top, .phone-top {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.16);
+            padding: 11px 18px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.92rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--muted);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            min-height: 44px;
+        }
+        .nav-btn:hover, .verify-top:hover, .phone-top:hover {
+            background: var(--blue);
+            color: #04221f;
+            border-color: var(--blue);
+        }
+        .nav-btn.active {
+            background: #1a1a1a;
+            color: #fff;
+            border-color: #1a1a1a;
+        }
+        .phone-top {
+            background: var(--blue);
+            color: #04221f;
+            border-color: var(--blue);
+            font-weight: 700;
+        }
+
+        .page { display: none; animation: fadeIn 0.3s ease; }
+        .page.active-page { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        h1, h2, h3 { color: var(--ink); }
+        h1 { font-size: clamp(2rem, 4.5vw, 3.2rem); margin-bottom: 16px; letter-spacing: -0.03em; line-height: 1.12; }
+        h2 {
+            font-size: 1.7rem;
+            margin: 28px 0 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h2::before {
+            content: "";
+            width: 6px;
+            height: 26px;
+            background: var(--blue);
+            border-radius: 8px;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+        .brand-highlight { color: var(--blue); font-weight: 700; }
+        .eyebrow {
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 0.78rem;
+            color: var(--blue);
+            font-weight: 700;
+        }
+        .lead, .section-sub {
+            color: var(--muted);
+            max-width: 56ch;
+            font-size: 1.05rem;
+        }
+
+        .rect {
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: 0 10px 28px rgba(0,0,0,0.22);
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.4fr 0.85fr;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .hero-main {
+            padding: 40px 32px;
+            background:
+                radial-gradient(circle at 90% 10%, rgba(46,196,182,0.22), transparent 45%),
+                linear-gradient(160deg, #0d1a24, #071018);
+            color: var(--ink);
+            border: 1px solid var(--line);
+        }
+        .hero-main h1 { color: #fff; margin: 10px 0 14px; max-width: 16ch; }
+        .hero-main p { color: var(--muted); max-width: 52ch; }
+        .inset {
+            display: inline-block;
+            margin-top: 18px;
+            background: rgba(46,196,182,0.12);
+            border: 1px solid rgba(46,196,182,0.35);
+            color: var(--blue);
+            padding: 10px 16px;
+            font-weight: 600;
+            border-radius: 999px;
+        }
+        .hero-side {
+            display: grid;
+            gap: 16px;
+        }
+        .quote-box {
+            background: #122230;
+            color: var(--ink);
+            padding: 22px 20px;
+            border: 1px solid var(--line);
+        }
+        .quote-box p { font-size: 1.05rem; color: var(--ink); }
+        .quote-box span {
+            display: block;
+            margin-top: 10px;
+            color: var(--blue);
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        .action-box {
+            padding: 20px;
+            background: #0d1a24;
+            display: grid;
+            gap: 10px;
+        }
+        .action-box strong { color: #fff; font-size: 1.05rem; }
+        .btn-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+        .btn-primary, .submit-review {
+            background: var(--blue);
+            color: #04221f;
+            border: none;
+            padding: 14px 22px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 0.95rem;
+        }
+        .btn-primary:hover, .submit-review:hover { background: var(--blue-mid); color: #fff; }
+        .btn-call {
+            background: transparent;
+            color: var(--ink);
+            border: 1px solid rgba(255,255,255,0.16);
+            padding: 12px 20px;
+            border-radius: 999px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-call:hover { background: #1a1a1a; color: #fff; }
+
+        .text-band {
+            display: block;
+            margin: 8px 0 18px;
+            background: transparent;
+            min-height: 0;
+        }
+        .text-band .label { display: none; }
+        .text-band .copy {
+            background: transparent;
+            border: 0;
+            padding: 0;
+            color: var(--muted);
+            font-size: 1.02rem;
+        }
+
+        .grid-reasons, .grid-services {
+            display: grid;
+            gap: 16px;
+            margin: 18px 0 28px;
+        }
+        @media (min-width: 700px) {
+            .grid-services { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (min-width: 900px) {
+            .grid-reasons { grid-template-columns: repeat(4, 1fr); }
+            .booking-layout { grid-template-columns: 1.15fr 0.85fr; }
+        }
+        @media (max-width: 820px) {
+            .hero, .text-band, .booking-layout { grid-template-columns: 1fr; }
+            .text-band .copy { border-left: 1px solid var(--line); }
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--line);
+            color: var(--ink);
+            overflow: hidden;
+        }
+        .card-head {
+            background: #0d1a24;
+            color: #fff;
+            padding: 14px 16px;
+            font-size: 1.02rem;
+        }
+        .card-body { padding: 16px; color: var(--muted); }
+        .card:hover { transform: translateY(-3px); transition: transform 0.2s; }
+        .card-photo {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            display: block;
+            border-top: 1px solid var(--line);
+        }
+
+        .maps-box {
+            display: grid;
+            gap: 14px;
+            margin-top: 8px;
+            max-width: 520px;
+        }
+        .map-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+            color: var(--ink);
+            text-decoration: none;
+            font-weight: 700;
+        }
+        .map-link i { color: var(--blue); font-size: 1.4rem; }
+        .map-link:hover { border-color: var(--blue); }
+        .map-link span { display: block; font-weight: 500; color: var(--muted); font-size: 0.9rem; margin-top: 2px; }
+
+        .address-line {
+            background: var(--white);
+            padding: 14px 22px;
+            display: inline-block;
+            color: var(--ink);
+            border: 1px solid var(--line);
+            font-weight: 600;
+            border-radius: 999px;
+        }
+
+        .modal, .verify-modal, .verify-panel {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(4, 10, 16, 0.72);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-content, .verify-panel-content {
+            background: #122230;
+            border-radius: 24px;
+            max-width: 500px;
+            width: 100%;
+            padding: 28px;
+            position: relative;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.45);
+            color: var(--ink);
+            border: 1px solid var(--line);
+        }
+        .modal-close, .verify-close {
+            position: absolute;
+            top: 10px; right: 16px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--muted);
+        }
+        .price-tag {
+            font-weight: 700;
+            font-size: 1.35rem;
+            background: rgba(46,196,182,0.14);
+            padding: 8px 18px;
+            margin: 14px 0;
+            display: inline-block;
+            color: var(--blue);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+        .contact-card {
+            background: var(--white);
+            padding: 0;
+            text-align: left;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .contact-card .icon-bar {
+            background: #0d1a24;
+            color: var(--blue);
+            padding: 16px;
+            font-size: 1.6rem;
+        }
+        .contact-card p { padding: 16px; font-weight: 600; color: var(--ink); }
+        .contact-card a { color: inherit; text-decoration: none; }
+
+        .review-form, .booking-form {
+            background: var(--white);
+            padding: 26px 22px;
+            margin: 18px 0;
+            border: 1px solid var(--line);
+            color: var(--ink);
+            border-radius: var(--radius);
+        }
+        .stars i {
+            font-size: 2rem;
+            color: #3d5360;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .stars i.active { color: var(--gold); }
+        select, input, textarea {
+            width: 100%;
+            padding: 14px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.12);
+            margin: 6px 0 14px;
+            background: #0b1720;
+            color: var(--ink);
+            font-size: 16px;
+        }
+        label.field {
+            display: block;
+            font-weight: 700;
+            color: var(--ink);
+            font-size: 0.88rem;
+        }
+        .verify-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #0d1a24;
+            border: 1px solid var(--line);
+            padding: 14px 18px;
+            margin: 10px 0;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--ink);
+            border-radius: 999px;
+        }
+        .verify-option:hover { background: var(--blue); color: #04221f; }
+        .verification-badge {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+        }
+        .verify-btn {
+            background: #0d1a24;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--ink);
+        }
+        .verify-btn:hover { background: var(--blue); color: #04221f; }
+
+        .review-item, .booking-item {
+            background: var(--white);
+            padding: 0;
+            margin-top: 10px;
+            color: var(--ink);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .review-item .bar, .booking-item .bar {
+            background: #163042;
+            padding: 10px 14px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .review-item p, .booking-item p { padding: 12px 14px; color: var(--muted); }
+
+        .service-card { cursor: pointer; }
+
+        .booking-layout {
+            display: grid;
+            gap: 16px;
+            align-items: start;
+        }
+        .phone-panel {
+            background: linear-gradient(180deg, #0d1a24, #071018);
+            color: #fff;
+            padding: 24px 22px;
+            border: 1px solid var(--line);
+        }
+        .phone-panel h3 { color: #fff; margin-bottom: 10px; }
+        .phone-panel p { color: var(--muted); margin-bottom: 16px; }
+        .phone-big {
+            display: block;
+            font-size: 1.55rem;
+            font-weight: 800;
+            color: var(--blue);
+            text-decoration: none;
+            margin-bottom: 14px;
+            letter-spacing: 0.02em;
+        }
+        .hours-box {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 14px;
+            margin-top: 8px;
+            border-radius: 12px;
+            color: var(--muted);
+        }
+        .form-msg { min-height: 1.3em; margin-top: 4px; font-weight: 600; }
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .review-fields {
+            position: relative;
+            min-height: 180px;
+        }
+        .review-lock {
+            position: absolute;
+            inset: 0;
+            background: rgba(7, 16, 24, 0.82);
+            border: 1px dashed var(--line);
+            border-radius: 12px;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 16px;
+            color: var(--blue);
+            font-weight: 700;
+        }
+        .review-fields.is-locked .review-controls {
+            pointer-events: none;
+            user-select: none;
+            filter: grayscale(0.4);
+            opacity: 0.45;
+        }
+        .review-fields:not(.is-locked) .review-lock { display: none; }
+        .submit-review:disabled, .btn-primary:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            background: #3d5360;
+            color: #9bb0bd;
+        }
+        .code-step { display: none; margin-top: 8px; }
+        .code-step.visible { display: block; }
+
+        .mobile-nav {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .grid-services, .grid-reasons, .two-col { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8rem; }
+        }
+
+        @media (max-width: 820px) {
+            body {
+                padding: 0 12px calc(78px + env(safe-area-inset-bottom));
+            }
+            .top-nav {
+                margin: 0 -12px 14px;
+                padding: 10px 12px;
+                gap: 8px;
+            }
+            .brand-logo { font-size: 1.28rem; }
+            .nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .top-nav.is-open .nav-links { display: flex; }
+            .nav-links .nav-btn,
+            .nav-links .phone-top,
+            .nav-links .verify-top {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+            .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+            .hero-main { padding: 22px 18px; }
+            .hero-main h1 { font-size: 1.55rem; max-width: none; }
+            .card-photo {
+                aspect-ratio: 16 / 9;
+            }
+            .address-line { display: block; }
+            .btn-row .btn-primary, .btn-row .btn-call, .btn-primary, .submit-review, .btn-call {
+                width: 100%;
+                justify-content: center;
+                text-align: center;
+            }
+            .modal, .verify-modal, .verify-panel {
+                align-items: flex-end;
+                padding: 0;
+            }
+            .modal-content, .verify-panel-content {
+                max-width: 100%;
+                width: 100%;
+                border-radius: 20px 20px 0 0;
+                padding: 22px 16px calc(20px + env(safe-area-inset-bottom));
+            }
+            .mobile-nav {
+                display: flex;
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 80;
+                background: rgba(7, 16, 24, 0.96);
+                border-top: 1px solid rgba(255,255,255,0.08);
+                padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+                justify-content: space-around;
+            }
+            .mobile-nav button, .mobile-nav a {
+                flex: 1;
+                background: transparent;
+                border: 0;
+                color: var(--muted);
+                font-size: 0.68rem;
+                font-weight: 700;
+                padding: 6px 2px;
+                text-decoration: none;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 3px;
+            }
+            .mobile-nav i { font-size: 1.05rem; }
+            .mobile-nav .is-current { color: var(--blue); }
+            .card:hover { transform: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-nav" id="topNav">
+        <div class="brand-logo">🚗 <span>AquaShine</span></div>
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="Меню"><i class="fas fa-bars"></i></button>
+        <div class="nav-links" id="navLinks">
+            <button class="nav-btn active" data-page="home">Главное</button>
+            <button class="nav-btn" data-page="services">Услуги</button>
+            <button class="nav-btn" data-page="booking">Запись</button>
+            <button class="nav-btn" data-page="contacts">Контакты</button>
+            <button class="nav-btn" data-page="reviews">Отзывы</button>
+            <a class="phone-top" href="tel:+79991234567"><i class="fas fa-phone"></i> Позвонить</a>
+        </div>
+    </div>
+
+    <div id="home" class="page active-page">
+        <div class="hero">
+            <div class="hero-main rect">
+                <p class="eyebrow">Мойка · детейлинг · защита кузова</p>
+                <h1>Чистый автомобиль за 25 минут — без очередей и царапин</h1>
+                <p class="lead">AquaShine — это место, где ваш автомобиль получает заботу, которую он заслуживает. Бесконтактная мойка, ручная полировка и бережный уход за салоном. Работаем ежедневно с 8:00 до 22:00.</p>
+                <div class="inset">12 постов · рейтинг 4.9 · ожидание около 15 минут</div>
+            </div>
+            <div class="hero-side">
+                <div class="quote-box rect">
+                    <p>Экспресс — 15 минут. Комплекс — около 30. Детейлинг и защита кузова — по записи.</p>
+                    <span>стандарт AquaShine</span>
+                </div>
+                <div class="action-box rect">
+                    <strong>Запишитесь онлайн или позвоните</strong>
+                    <div class="btn-row">
+                        <button type="button" class="btn-primary" data-goto="booking">Онлайн-запись</button>
+                        <a class="btn-call" href="tel:+79991234567"><i class="fas fa-phone-alt"></i> +7 (999) 123-45-67</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="section-sub">г. Москва, ул. Автомобильная, д. 15, стр. 2 · парковка на территории</p>
+
+        <h2>Почему выбирают <span class="brand-highlight">AquaShine</span></h2>
+        <div class="grid-reasons">
+            <div class="card">
+                <div class="card-head">Премиум уход</div>
+                <div class="card-body">Сертифицированные средства и бережные составы для ЛКП.</div>
+                <img class="card-photo" src="img/reason-premium.jpg" alt="Премиум уход за кузовом">
+            </div>
+            <div class="card">
+                <div class="card-head">Скорость</div>
+                <div class="card-body">Экспресс — около 15 минут, комплекс — около 30.</div>
+                <img class="card-photo" src="img/reason-speed.jpg" alt="Быстрая мойка">
+            </div>
+            <div class="card">
+                <div class="card-head">Профессионалы</div>
+                <div class="card-body">Опытные мастера мойки и детейлинга.</div>
+                <img class="card-photo" src="img/reason-pros.jpg" alt="Мастера AquaShine">
+            </div>
+            <div class="card">
+                <div class="card-head">Экологично</div>
+                <div class="card-body">Биоразлагаемая химия и экономия воды.</div>
+                <img class="card-photo" src="img/reason-eco.jpg" alt="Экологичная мойка">
+            </div>
+        </div>
+
+        <p class="address-line">Заезжайте в AquaShine — и убедитесь в качестве сами</p>
+    </div>
+
+    <div id="services" class="page">
+        <h1>Наши услуги</h1>
+        <p class="section-sub">Нажмите на карточку, чтобы увидеть состав и цену. Оттуда можно сразу записаться.</p>
+        <div class="grid-services">
+            <div class="card service-card" data-service="standard"><div class="card-head">🚿 Стандартная</div><div class="card-body">Кузов, коврики.</div><img class="card-photo" src="img/service-standard.jpg" alt="Стандартная мойка"></div>
+            <div class="card service-card" data-service="premium"><div class="card-head">✨ Премиум</div><div class="card-body">Воск, чернение.</div><img class="card-photo" src="img/service-premium.jpg" alt="Премиум мойка"></div>
+            <div class="card service-card" data-service="express"><div class="card-head">⏱️ Экспресс</div><div class="card-body">15 минут.</div><img class="card-photo" src="img/service-express.jpg" alt="Экспресс мойка"></div>
+            <div class="card service-card" data-service="carpets"><div class="card-head">🧹 Выбивка ковров</div><div class="card-body">Глубокая чистка.</div><img class="card-photo" src="img/service-carpets.jpg" alt="Выбивка ковров"></div>
+            <div class="card service-card" data-service="dryclean"><div class="card-head">🧼 Химчистка</div><div class="card-body">Салон полностью.</div><img class="card-photo" src="img/service-dryclean.jpg" alt="Химчистка салона"></div>
+            <div class="card service-card" data-service="maintenance"><div class="card-head">🔩 ТО</div><div class="card-body">Диагностика.</div><img class="card-photo" src="img/service-maintenance.jpg" alt="ТО автомобиля"></div>
+        </div>
+    </div>
+
+    <div id="booking" class="page">
+        <h1>Онлайн-запись</h1>
+        <p class="section-sub">Выберите услугу, дату и время — администратор подтвердит слот. Если удобнее голосом, наберите номер справа.</p>
+        <div class="booking-layout">
+            <form class="booking-form rect" id="bookingForm">
+                <label class="field">Имя
+                    <input type="text" id="bookName" name="name" required placeholder="Алексей" autocomplete="name">
+                </label>
+                <label class="field">Телефон
+                    <input type="tel" id="bookPhone" name="phone" required placeholder="+7 (999) 000-00-00" autocomplete="tel">
+                </label>
+                <label class="field">Услуга
+                    <select id="bookService" name="service" required>
+                        <option value="standard">Стандартная мойка — от 2 100 ₽</option>
+                        <option value="premium">Премиум мойка — от 4 500 ₽</option>
+                        <option value="express">Экспресс мойка — от 1 500 ₽</option>
+                        <option value="carpets">Выбивка ковров — от 1 200 ₽</option>
+                        <option value="dryclean">Химчистка салона — от 10 500 ₽</option>
+                        <option value="maintenance">ТО автомобиля — от 7 500 ₽</option>
+                    </select>
+                </label>
+                <div class="two-col">
+                    <label class="field">Дата
+                        <input type="date" id="bookDate" name="date" required>
+                    </label>
+                    <label class="field">Время
+                        <select id="bookTime" name="time" required></select>
+                    </label>
+                </div>
+                <label class="field">Госномер (необязательно)
+                    <input type="text" id="bookPlate" name="plate" placeholder="А123БВ 77">
+                </label>
+                <label class="field">Комментарий
+                    <textarea id="bookComment" name="comment" rows="2" placeholder="Тип кузова, пожелания..."></textarea>
+                </label>
+                <button type="submit" class="submit-review">Записаться</button>
+                <p class="form-msg" id="bookingMessage"></p>
+                <div id="bookingList"></div>
+            </form>
+            <aside class="phone-panel rect">
+                <h3>Связаться по телефону</h3>
+                <p>Подскажем свободное окно и подберём услугу под загрязнение.</p>
+                <a class="phone-big" href="tel:+79991234567">+7 (999) 123-45-67</a>
+                <a class="btn-call" href="tel:+79991234567"><i class="fas fa-phone-alt"></i> Позвонить сейчас</a>
+                <div class="hours-box">Пн–Вс · 8:00–22:00<br>ул. Автомобильная, 15 стр. 2</div>
+            </aside>
+        </div>
+    </div>
+
+    <div id="contacts" class="page">
+        <h1>Контакты</h1>
+        <p class="section-sub">Запись по телефону и в мессенджерах. Онлайн-форму смотрите в разделе «Запись».</p>
+        <div class="contact-grid">
+            <div class="contact-card rect"><div class="icon-bar"><i class="fas fa-phone-alt"></i></div><p><a href="tel:+79991234567">+7 (999) 123-45-67</a></p></div>
+            <div class="contact-card rect"><div class="icon-bar"><i class="fab fa-telegram-plane"></i></div><p><a href="https://t.me/aquashine_car" target="_blank" rel="noopener">@aquashine_car</a></p></div>
+            <div class="contact-card rect"><div class="icon-bar"><i class="fab fa-vk"></i></div><p><a href="https://vk.com/aquashine" target="_blank" rel="noopener">vk.com/aquashine</a></p></div>
+            <div class="contact-card rect"><div class="icon-bar"><i class="fas fa-comment-dots"></i></div><p>@aquashine.max</p></div>
+        </div>
+        <div class="action-box rect">
+            <strong>Удобнее записаться без звонка?</strong>
+            <div class="btn-row">
+                <button type="button" class="btn-primary" data-goto="booking">Открыть онлайн-запись</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="reviews" class="page">
+        <h1>Отзывы</h1>
+        <p class="section-sub">Настоящие отзывы клиентов смотрите на картах — там оценки после реальных визитов.</p>
+        <div class="maps-box">
+            <a class="map-link" href="https://yandex.ru/maps/?text=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%20%D1%83%D0%BB.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%BE%D0%B1%D0%B8%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F%2C%2015" target="_blank" rel="noopener">
+                <i class="fas fa-map-marker-alt"></i>
+                <div>Яндекс Карты<span>Отзывы и маршрут до AquaShine</span></div>
+            </a>
+            <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%20%D1%83%D0%BB.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%BE%D0%B1%D0%B8%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F%2015" target="_blank" rel="noopener">
+                <i class="fab fa-google"></i>
+                <div>Google Maps<span>Оценки и как доехать</span></div>
+            </a>
+        </div>
+    </div>
+
+    <div class="modal" id="serviceModal">
+        <div class="modal-content">
+            <span class="modal-close" id="modalClose">&times;</span>
+            <h3 id="modalTitle"></h3>
+            <p id="modalDescription"></p>
+            <p id="modalIncludes"></p>
+            <div class="price-tag" id="modalPrice"></div>
+            <button type="button" class="btn-primary" id="modalBookBtn">Записаться на эту услугу</button>
+        </div>
+    </div>
+
+    <nav class="mobile-nav" id="mobileNav" aria-label="Навигация">
+        <button type="button" data-page="home" class="is-current"><i class="fas fa-home"></i>Главное</button>
+        <button type="button" data-page="services"><i class="fas fa-shower"></i>Услуги</button>
+        <button type="button" data-page="booking"><i class="fas fa-calendar-check"></i>Запись</button>
+        <button type="button" data-page="reviews"><i class="fas fa-star"></i>Отзывы</button>
+        <a href="tel:+79991234567"><i class="fas fa-phone"></i>Звонок</a>
+    </nav>
+
+    <script>
+        (function () {
+            let selectedServiceKey = 'standard';
+            const topNav = document.getElementById('topNav');
+            const menuToggle = document.getElementById('menuToggle');
+            const navButtons = document.querySelectorAll('.nav-btn');
+            const mobileNavButtons = document.querySelectorAll('#mobileNav [data-page]');
+            const pages = {
+                home: document.getElementById('home'),
+                services: document.getElementById('services'),
+                booking: document.getElementById('booking'),
+                contacts: document.getElementById('contacts'),
+                reviews: document.getElementById('reviews')
+            };
+
+            function showPage(pageId) {
+                navButtons.forEach(function (b) {
+                    b.classList.toggle('active', b.getAttribute('data-page') === pageId);
+                });
+                mobileNavButtons.forEach(function (b) {
+                    b.classList.toggle('is-current', b.getAttribute('data-page') === pageId);
+                });
+                for (var key in pages) pages[key].classList.remove('active-page');
+                if (pages[pageId]) pages[pageId].classList.add('active-page');
+                topNav.classList.remove('is-open');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            navButtons.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    showPage(this.getAttribute('data-page'));
+                });
+            });
+            mobileNavButtons.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    showPage(this.getAttribute('data-page'));
+                });
+            });
+            menuToggle.addEventListener('click', function () {
+                topNav.classList.toggle('is-open');
+            });
+            document.querySelectorAll('[data-goto]').forEach(function (el) {
+                el.addEventListener('click', function () {
+                    showPage(this.getAttribute('data-goto'));
+                });
+            });
+
+            const timeSelect = document.getElementById('bookTime');
+            for (var h = 8; h <= 21; h++) {
+                ['00', '30'].forEach(function (m) {
+                    if (h === 21 && m === '30') return;
+                    var label = (h < 10 ? '0' : '') + h + ':' + m;
+                    var opt = document.createElement('option');
+                    opt.value = label;
+                    opt.textContent = label;
+                    timeSelect.appendChild(opt);
+                });
+            }
+            var today = new Date();
+            var yyyy = today.getFullYear();
+            var mm = String(today.getMonth() + 1).padStart(2, '0');
+            var dd = String(today.getDate()).padStart(2, '0');
+            document.getElementById('bookDate').min = yyyy + '-' + mm + '-' + dd;
+            document.getElementById('bookDate').value = yyyy + '-' + mm + '-' + dd;
+
+            document.getElementById('bookingForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+                var name = document.getElementById('bookName').value.trim();
+                var phone = document.getElementById('bookPhone').value.trim();
+                var serviceEl = document.getElementById('bookService');
+                var serviceText = serviceEl.options[serviceEl.selectedIndex].text;
+                var date = document.getElementById('bookDate').value;
+                var time = document.getElementById('bookTime').value;
+                var plate = document.getElementById('bookPlate').value.trim();
+                var msg = document.getElementById('bookingMessage');
+
+                if (name.length < 2 || phone.length < 6) {
+                    msg.textContent = '❌ Укажите имя и телефон.';
+                    msg.style.color = '#c0392b';
+                    return;
+                }
+
+                var item = document.createElement('div');
+                item.className = 'booking-item';
+                var bar = document.createElement('div');
+                bar.className = 'bar';
+                bar.textContent = date.split('-').reverse().join('.') + ' · ' + time + ' · ' + serviceText;
+                var p = document.createElement('p');
+                p.textContent = name + ' · ' + phone + (plate ? ' · ' + plate : '');
+                item.append(bar, p);
+                document.getElementById('bookingList').prepend(item);
+
+                msg.textContent = '✅ Заявка принята. Перезвоним для подтверждения слота.';
+                msg.style.color = '#1e7e34';
+                document.getElementById('bookComment').value = '';
+            });
+
+            const serviceData = {
+                standard: { title: 'Стандартная', desc: 'Регулярный уход', includes: 'Кузов, коврики', price: 'от 2 100 ₽' },
+                premium: { title: 'Премиум', desc: 'Комплекс', includes: 'Воск, чернение', price: 'от 4 500 ₽' },
+                express: { title: 'Экспресс', desc: 'Быстро', includes: 'Кузов 15 мин', price: 'от 1 500 ₽' },
+                carpets: { title: 'Выбивка', desc: 'Чистка', includes: 'Выбивка, сушка', price: 'от 1 200 ₽' },
+                dryclean: { title: 'Химчистка', desc: 'Полная', includes: 'Салон, потолок', price: 'от 10 500 ₽' },
+                maintenance: { title: 'ТО', desc: 'Диагностика', includes: 'Жидкости, фильтры', price: 'от 7 500 ₽' }
+            };
+
+            const serviceModal = document.getElementById('serviceModal');
+            document.querySelectorAll('.service-card').forEach(function (card) {
+                card.addEventListener('click', function () {
+                    selectedServiceKey = this.getAttribute('data-service');
+                    const data = serviceData[selectedServiceKey];
+                    document.getElementById('modalTitle').textContent = data.title;
+                    document.getElementById('modalDescription').textContent = data.desc;
+                    document.getElementById('modalIncludes').textContent = data.includes;
+                    document.getElementById('modalPrice').textContent = data.price;
+                    serviceModal.style.display = 'flex';
+                });
+            });
+            document.getElementById('modalClose').addEventListener('click', function () {
+                serviceModal.style.display = 'none';
+            });
+            document.getElementById('modalBookBtn').addEventListener('click', function () {
+                document.getElementById('bookService').value = selectedServiceKey;
+                serviceModal.style.display = 'none';
+                showPage('booking');
+            });
+            window.addEventListener('click', function (e) {
+                if (e.target === serviceModal) serviceModal.style.display = 'none';
+            });
+        })();
+    </script>
+</body>
+</html>
